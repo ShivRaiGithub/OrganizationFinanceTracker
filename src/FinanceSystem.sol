@@ -23,6 +23,7 @@ contract FinanceSystem {
         string description;
         address recipient;
         address sender;
+        bool sentToOrg;
         uint256 timestamp;
         uint256 accountBalance;
     }
