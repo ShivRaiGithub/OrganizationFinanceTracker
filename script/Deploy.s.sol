@@ -11,12 +11,13 @@ contract Deploy is Script {
         FinanceSystem fs = new FinanceSystem("MyOrg", owner);
 
         // Add tracked accounts
-        address[5] memory accounts = [
+        address[6] memory accounts = [
             0x1234567890AbcdEF1234567890aBcdef12345678,
             0x9876543210FeDcba9876543210FEdCba98765432,
             0xdEF1234567890AbcdEF1234567890aBcdEF12345,
             0xabCDEF1234567890ABcDEF1234567890aBCDeF12,
-            0xfEdcBA9876543210FedCBa9876543210fEdCBa98
+            0xfEdcBA9876543210FedCBa9876543210fEdCBa98,
+            0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
         ];
 
         for (uint i = 0; i < accounts.length; i++) {
@@ -35,7 +36,6 @@ contract Deploy is Script {
         fs.addTransaction(800, "Utility Bill Payment", 0x876543210AbcdeF9876543210abCdeF987654321, accounts[1], false, 1725148800); // Sep 1, 2024
         fs.addTransaction(1800, "Received from Partner", accounts[0], accounts[2], true, 1727740800); // Oct 1, 2024
         fs.addTransaction(700, "Advertising Payment", accounts[4], accounts[0], false, 1730419200); // Nov 1, 2024
-        fs.addTransaction(3000, "Sales Revenue", accounts[1], accounts[3], true, 1733011200); // Dec 1, 2024
         fs.addTransaction(900, "Web Development Contract", accounts[1], accounts[3], true, 1704153600); // Jan 2, 2024
         fs.addTransaction(2200, "Partner Commission", accounts[0], accounts[4], true, 1706832000); // Feb 2, 2024
         fs.addTransaction(400, "IT Services Payment", accounts[2], accounts[1], false, 1709337600); // Mar 2, 2024
