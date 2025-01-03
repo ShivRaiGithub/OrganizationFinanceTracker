@@ -25,7 +25,6 @@ contract FinanceSystem {
         address sender;
         bool sentToOrg;
         uint256 timestamp;
-        uint256 accountBalance;
     }
     // Mapping of tracked accounts
     mapping(address => bool) private trackedAccounts;
@@ -75,26 +74,25 @@ contract FinanceSystem {
     }
 
     // Tracked accounts allowed to make payments
-    function makePayment(uint256 _amount, string memory _description, address _recipient, bool _sentToOrg) public onlyAuthorized {
-        require(_amount > 0, "Amount must be greater than 0");
-        require(_recipient != address(0), "Recipient address must be valid");
+    // function makePayment(uint256 _amount, string memory _description, address _recipient, bool _sentToOrg) public onlyAuthorized {
+    //     require(_amount > 0, "Amount must be greater than 0");
+    //     require(_recipient != address(0), "Recipient address must be valid");
 
-        (bool success, ) = _recipient.call{value: _amount}("");
+    //     (bool success, ) = _recipient.call{value: _amount}("");
     
-        if (!success) {
-            revert("Transfer failed");
-        }
-        Transaction memory newTransaction = Transaction({
-            amount: _amount,
-            description: _description,
-            recipient: _recipient,
-            sender: msg.sender,
-            sentToOrg: _sentToOrg,
-            timestamp: block.timestamp,
-            accountBalance: address(msg.sender).balance
-        });
-        transactions.push(newTransaction);
-    }
+    //     if (!success) {
+    //         revert("Transfer failed");
+    //     }
+    //     Transaction memory newTransaction = Transaction({
+    //         amount: _amount,
+    //         description: _description,
+    //         recipient: _recipient,
+    //         sender: msg.sender,
+    //         sentToOrg: _sentToOrg,
+    //         timestamp: block.timestamp,
+    //     });
+    //     transactions.push(newTransaction);
+    // }
     // Add a manual transaction
     function addTransaction(uint256 _amount, string memory _description, address _recipient, address _sender, bool _sentToOrg, uint256 _timestamp) public onlyOwner {
         require(_amount > 0, "Amount must be greater than 0");
@@ -104,8 +102,7 @@ contract FinanceSystem {
             recipient: _recipient,
             sender: _sender,
             sentToOrg: _sentToOrg,
-            timestamp: _timestamp,
-            accountBalance: address(msg.sender).balance
+            timestamp: _timestamp
         });
 
         transactions.push(newTransaction);
