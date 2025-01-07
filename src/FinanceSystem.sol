@@ -6,7 +6,6 @@ Contract to track financial transactions:
 Admin initializes contract with his address and organization name
 Admin can add accounts to be tracked
 Admin can remove accounts from being tracked
-Authorized accounts can make payments
 Authorized accounts can manually add transactions ( like those for money received )
 Authorized accounts can get transaction details
  */
@@ -46,8 +45,8 @@ contract FinanceSystem {
 
     // Modifier to check if the caller is a tracked account
     modifier onlyAuthorized() {
-        // require(trackedAccounts[msg.sender] || msg.sender==i_owner, "Only authorized accounts can call this function");
-        require(true, "Only authorized accounts can call this function");
+        require(trackedAccounts[msg.sender] || msg.sender==i_owner, "Only authorized accounts can call this function");
+        // require(true, "Only authorized accounts can call this function");
         _;
     }
 
@@ -73,28 +72,8 @@ contract FinanceSystem {
         accountsList.pop();
     }
 
-    // Tracked accounts allowed to make payments
-    // function makePayment(uint256 _amount, string memory _description, address _recipient, bool _sentToOrg) public onlyAuthorized {
-    //     require(_amount > 0, "Amount must be greater than 0");
-    //     require(_recipient != address(0), "Recipient address must be valid");
-
-    //     (bool success, ) = _recipient.call{value: _amount}("");
-    
-    //     if (!success) {
-    //         revert("Transfer failed");
-    //     }
-    //     Transaction memory newTransaction = Transaction({
-    //         amount: _amount,
-    //         description: _description,
-    //         recipient: _recipient,
-    //         sender: msg.sender,
-    //         sentToOrg: _sentToOrg,
-    //         timestamp: block.timestamp,
-    //     });
-    //     transactions.push(newTransaction);
-    // }
     // Add a manual transaction
-    function addTransaction(uint256 _amount, string memory _description, address _recipient, address _sender, bool _sentToOrg, uint256 _timestamp) public onlyOwner {
+    function addTransaction(uint256 _amount, string memory _description, address _recipient, address _sender, bool _sentToOrg, uint256 _timestamp) public onlyAuthorized {
         require(_amount > 0, "Amount must be greater than 0");
         Transaction memory newTransaction = Transaction({
             amount: _amount,
@@ -119,6 +98,14 @@ contract FinanceSystem {
     }
     function getAccountsList() public view returns (address[] memory)  {
         return accountsList;
+    }
+    
+    function getOrgName() public view returns(string memory){
+        return orgName;        
+    }
+
+    function checkIfAuthorized(address _account) public view returns(bool){
+        return trackedAccounts[_account];
     }
 
 }
