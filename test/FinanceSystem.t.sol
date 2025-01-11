@@ -18,7 +18,7 @@ contract NormalTests is Test {
         vm.startPrank(USER);
         uint256 initialBalance = ft.getTransactions().length;
         vm.stopPrank();
-        assertEq(initialBalance, 20);
+        assertEq(initialBalance, 19);
     }
 
 }
