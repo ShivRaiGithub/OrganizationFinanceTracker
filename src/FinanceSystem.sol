@@ -7,7 +7,6 @@ Admin initializes contract with his address and organization name
 Admin can add accounts to be tracked
 Admin can remove accounts from being tracked
 Authorized accounts can manually add transactions ( like those for money received )
-Authorized accounts can get transaction details
  */
 
 contract FinanceSystem {
